@@ -230,7 +230,7 @@ services:
       - ./jupyter/work/:/home/jovyan/work/
       - ./jupyter/packages/R/:/usr/local/spark-3.0.1-bin-hadoop3.2/R/lib
       - ./executors/worker-data:/home/jovyan/data/
-      - ./executors/worker-app:/home/jovyan/work/
+      - ./executors/worker-app:/home/jovyan/apps/
     networks:
       devel-network:
         ipv4_address: 172.27.1.19
