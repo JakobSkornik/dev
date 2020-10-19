@@ -1,0 +1,57 @@
+micronaut:
+  security:
+    enabled: true
+    # Ldap authentificaton configuration
+    ldap:
+      default:
+        enabled: true
+        context:
+          server: 'ldap://ldap.forumsys.com:389'
+          managerDn: 'cn=read-only-admin,dc=example,dc=com'
+          managerPassword: 'password'
+        search:
+          base: "dc=example,dc=com"
+        groups:
+          enabled: true
+          base: "dc=example,dc=com"
+    # OIDC authentification configuration
+    oauth2:
+      enabled: true
+      clients:
+        oidc:
+          client-id: "<client-id>"
+          client-secret: "<client-secret>"
+          openid:
+            issuer: "<issuer-url>"
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: pleasechangeme
+
+akhq:
+  # list of kafka cluster available for akhq
+  connections:
+    cluster: # url friendly name for the cluster (letter, number, _, -, ... dot are not allowed here)
+      properties:
+        bootstrap.servers: "kafka:9092"
+      schema-registry:
+        url: "http://schema-registry:8085"
+        basic-auth-username: basic-auth-user
+        basic-auth-password: basic-auth-pass
+      connect:
+          name: connect-1
+          url: "http://connect:8083"
+
+  pagination:
+    page-size: 25 # number of elements per page (default : 25)
+    threads: 16 # Number of parallel threads to resolve page
+
+    # Basic auth configuration
+    basic-auth:
+      - username: user # Username
+        password: pass # Password in sha256
+        groups: # Groups for the user
+          - admin
+          - topic-reader
