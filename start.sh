@@ -1,32 +1,20 @@
 #!/bin/bash
 shopt -s expand_aliases
 
-function run {
-	token=$(docker-compose up | grep -o -m 1 'token=[^EOL]*')
-	file="scripts/jupyter.sh"
-	printf "sensible-browser 172.27.1.19:8888/?" > "$file"
-	printf "$token" >> "$file"
-}
-
-
 while test $# -gt 0
 do
 	case "$1" in
 
 		-f)
 			echo -e "\nRun this script with flag '--help' for help.\n \n"
-			run
-			source scripts/jupyter.sh &
-			sensible-browser 172.27.1.5:50070 &
-			sensible-browser 172.27.1.17:18630 &
+			docker-compose up -d
 			sensible-browser 172.27.1.10:8080 &
-			sensible-browser 172.27.1.13:8888 &
 			sensible-browser 172.27.1.20:8080 &
 		;;
 
 		-a)
 			echo -e "\nRun this script with flag '--help' for help.\n \n"
-			run
+			docker-compose up -d
 			source scripts/aliases.sh
 		;;
 
@@ -52,7 +40,7 @@ do
 		;;
 
 		*)
-			run
+			docker-compose up -d
 		;;
 	esac
 	shift
